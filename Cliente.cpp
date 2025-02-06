@@ -1,8 +1,7 @@
 #include "Cliente.h"
 
 
-Cliente::Cliente(string nombre, int telefono, string carro, string modelo, int creacion, string servicio)
-{
+Cliente::Cliente(string nombre, int telefono, string carro, string modelo, int creacion, string servicio){
     this->nombre = nombre;
     this->telefono = telefono;
     this->carro = carro;
