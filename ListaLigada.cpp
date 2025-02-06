@@ -2,43 +2,43 @@
 #include <iostream>
 #include <algorithm>
 
-ListaLigada::ListaLigada() {
-    cabeza = nullptr;
+ListaLigada::ListaLigada(){
+    cabeza=nullptr;
 }
 
-ListaLigada::~ListaLigada() {
+ListaLigada::~ListaLigada(){
     liberarMemoria();
 }
 
-void ListaLigada::liberarMemoria() {
-    while (cabeza != nullptr) {
-        Nodo* temp = cabeza;
-        cabeza = cabeza->siguiente;
+void ListaLigada::liberarMemoria(){
+    while (cabeza!=nullptr){
+        Nodo* temp=cabeza;
+        cabeza=cabeza->siguiente;
         delete temp;
     }
 }
 
-void ListaLigada::insertar(Cliente cliente) {
-    Nodo* nuevo = new Nodo(cliente);
-    if (cabeza == nullptr) {
-        cabeza = nuevo;
-    } else {
-        Nodo* actual = cabeza;
-        while (actual->siguiente != nullptr) {
-            actual = actual->siguiente;
+void ListaLigada::insertar(Cliente cliente){
+    Nodo* nuevo=new Nodo(cliente);
+    if (cabeza==nullptr){
+        cabeza=nuevo;
+    }else{
+        Nodo* actual=cabeza;
+        while (actual->siguiente!=nullptr){
+            actual=actual->siguiente;
         }
-        actual->siguiente = nuevo;
+        actual->siguiente=nuevo;
     }
 }
 
-void ListaLigada::mostrar() {
+void ListaLigada::mostrar(){
     Nodo* actual = cabeza;
-    if (actual == nullptr) {
-        cout << "\nLa lista esta vacia." << endl;
+    if (actual == nullptr){
+        cout << "\nLa lista esta vacia."<<endl;
         return;
     }
-    cout << "\n=== LISTA DE CLIENTES ===\n" << endl;
-    while (actual != nullptr) {
+    cout << "\n=== LISTA DE CLIENTES ===\n"<<endl;
+    while (actual != nullptr){
         cout << "Nombre: " << actual->cliente.get_nombre() << endl;
         cout << "Telefono: " << actual->cliente.get_telefono() << endl;
         cout << "Carro: " << actual->cliente.get_carro() << endl;
@@ -50,16 +50,16 @@ void ListaLigada::mostrar() {
     }
 }
 
-bool ListaLigada::guardar(const string& nombreArchivo) {
+bool ListaLigada::guardar(const string& nombreArchivo){
     ofstream archivo(nombreArchivo);
-    if (!archivo.is_open()) {
+    if (!archivo.is_open()){
         cout << "Error: No se pudo abrir el archivo para escritura." << endl;
         return false;
     }
     
-    try {
+    try{
         Nodo* actual = cabeza;
-        while (actual != nullptr) {
+        while(actual != nullptr){
             archivo << actual->cliente.get_nombre() << ","
                    << actual->cliente.get_telefono() << ","
                    << actual->cliente.get_carro() << ","
@@ -69,28 +69,28 @@ bool ListaLigada::guardar(const string& nombreArchivo) {
             actual = actual->siguiente;
         }
         archivo.close();
-        cout << "Datos guardados correctamente en " << nombreArchivo << endl;
+        cout << "Datos guardados correctamente en "<<nombreArchivo <<endl;
         return true;
-    } catch (const exception& e) {
+    } catch (const exception& e){
         archivo.close();
-        cout << "Error al guardar los datos: " << e.what() << endl;
+        cout<<"Error al guardar los datos: "<<e.what()<<endl;
         return false;
     }
 }
 
-bool ListaLigada::cargarArchivo(const string& nombreArchivo) {
+bool ListaLigada::cargarArchivo(const string& nombreArchivo){
     ifstream archivo(nombreArchivo);
     if (!archivo.is_open()) {
-        cout << "Error: No se pudo abrir el archivo para lectura." << endl;
+        cout<<"Error: No se pudo abrir el archivo para lectura."<<endl;
         return false;
     }
 
-    try {
+    try{
         liberarMemoria(); 
         string linea, nombre, carro, modelo, servicio;
         int telefono, creacion;
         
-        while (getline(archivo, linea)) {
+        while (getline(archivo, linea)){
             stringstream ss(linea);
             
             getline(ss, nombre, ',');
@@ -106,19 +106,19 @@ bool ListaLigada::cargarArchivo(const string& nombreArchivo) {
         }
         
         archivo.close();
-        cout << "Datos cargados correctamente desde " << nombreArchivo << endl;
+        cout<<"Datos cargados correctamente desde "<<nombreArchivo<<endl;
         return true;
-    } catch (const exception& e) {
+    } catch (const exception& e){
         archivo.close();
-        cout << "Error al cargar los datos: " << e.what() << endl;
+        cout << "Error al cargar los datos: " << e.what()<<endl;
         return false;
     }
 }
 
-Nodo* ListaLigada::encontrarCliente(const string& nombre) {
-    Nodo* actual = cabeza;
-    while (actual != nullptr) {
-        if (actual->cliente.get_nombre() == nombre) {
+Nodo* ListaLigada::encontrarCliente(const string& nombre){
+    Nodo* actual=cabeza;
+    while (actual!=nullptr) {
+        if (actual->cliente.get_nombre()==nombre){
             return actual;
         }
         actual = actual->siguiente;
@@ -126,26 +126,26 @@ Nodo* ListaLigada::encontrarCliente(const string& nombre) {
     return nullptr;
 }
 
-bool ListaLigada::modificarCliente(const string& nombre) {
+bool ListaLigada::modificarCliente(const string& nombre){
     Nodo* nodoCliente = encontrarCliente(nombre);
-    if (nodoCliente == nullptr) {
-        cout << "Cliente no encontrado." << endl;
+    if (nodoCliente == nullptr){
+        cout << "Cliente no encontrado."<<endl;
         return false;
     }
 
     int opcion;
-    cout << "\n=== MODIFICAR CLIENTE ===" << endl;
-    cout << "1. Modificar Nombre" << endl;
-    cout << "2. Modificar Telefono" << endl;
-    cout << "3. Modificar Carro" << endl;
-    cout << "4. Modificar Modelo" << endl;
-    cout << "5. Modificar Año" << endl;
-    cout << "6. Modificar Servicio" << endl;
-    cout << "Seleccione el dato a modificar: ";
-    cin >> opcion;
+    cout<<"\n=== MODIFICAR CLIENTE ==="<<endl;
+    cout<<"1. Modificar Nombre"<<endl;
+    cout<<"2. Modificar Telefono"<<endl;
+    cout<<"3. Modificar Carro"<<endl;
+    cout<<"4. Modificar Modelo"<<endl;
+    cout<<"5. Modificar Año"<<endl;
+    cout<<"6. Modificar Servicio"<<endl;
+    cout<<"Seleccione el dato a modificar: ";
+    cin>>opcion;
     cin.ignore();
 
-    switch (opcion) {
+    switch (opcion){
         case 1: {
             string nuevoNombre;
             cout << "Nuevo nombre: ";
@@ -153,7 +153,7 @@ bool ListaLigada::modificarCliente(const string& nombre) {
             nodoCliente->cliente.set_nombre(nuevoNombre);
             break;
         }
-        case 2: {
+        case 2:{
             int nuevoTelefono;
             cout << "Nuevo telefono: ";
             cin >> nuevoTelefono;
@@ -161,24 +161,24 @@ bool ListaLigada::modificarCliente(const string& nombre) {
             nodoCliente->cliente.set_telefono(nuevoTelefono);
             break;
         }
-        case 3: {
+        case 3:{
             string nuevoCarro;
-            cout << "Nuevo carro: ";
+            cout<<"Nuevo carro: ";
             getline(cin, nuevoCarro);
             nodoCliente->cliente.set_carro(nuevoCarro);
             break;
         }
-        case 4: {
+        case 4:{
             string nuevoModelo;
-            cout << "Nuevo modelo: ";
+            cout<<"Nuevo modelo: ";
             getline(cin, nuevoModelo);
             nodoCliente->cliente.set_modelo(nuevoModelo);
             break;
         }
-        case 5: {
+        case 5:{
             int nuevoAno;
-            cout << "Nuevo año: ";
-            cin >> nuevoAno;
+            cout<<"Nuevo año: ";
+            cin>>nuevoAno;
             cin.ignore();
             nodoCliente->cliente.set_creacion(nuevoAno);
             break;
@@ -191,13 +191,13 @@ bool ListaLigada::modificarCliente(const string& nombre) {
                 
                 transform(nuevoServicio.begin(), nuevoServicio.end(), nuevoServicio.begin(), ::tolower);
                 
-                if (nuevoServicio == "b") {
+                if (nuevoServicio == "b"){
                     nuevoServicio = "Basico";
-                } else if (nuevoServicio == "f") {
+                }else if (nuevoServicio == "f"){
                     nuevoServicio = "Frenos";
-                } else if (nuevoServicio == "c") {
+                }else if (nuevoServicio == "c"){
                     nuevoServicio = "Completo";
-                } else {
+                }else {
                     cout << "Error: Servicio no valido. Intente nuevamente." << endl;
                     continue;
                 }
@@ -213,19 +213,19 @@ bool ListaLigada::modificarCliente(const string& nombre) {
         }
     }
 
-    cout << "Cliente modificado exitosamente." << endl;
+    cout<<"Cliente modificado exitosamente."<<endl;
     return true;
 }
 
-bool ListaLigada::eliminarCliente(const string& nombre) {
-    if (cabeza == nullptr) {
-        cout << "La lista está vacía." << endl;
+bool ListaLigada::eliminarCliente(const string& nombre){
+    if (cabeza == nullptr){
+        cout << "La lista está vacía."<<endl;
         return false;
     }
 
     
-    if (cabeza->cliente.get_nombre() == nombre) {
-        Nodo* temp = cabeza;
+    if (cabeza->cliente.get_nombre() == nombre){
+        Nodo* temp=cabeza;
         cabeza = cabeza->siguiente;
         delete temp;
         cout << "Cliente eliminado exitosamente." << endl;
@@ -233,18 +233,18 @@ bool ListaLigada::eliminarCliente(const string& nombre) {
     }
 
     
-    Nodo* actual = cabeza;
-    while (actual->siguiente != nullptr) {
-        if (actual->siguiente->cliente.get_nombre() == nombre) {
+    Nodo* actual=cabeza;
+    while (actual->siguiente!=nullptr){
+        if (actual->siguiente->cliente.get_nombre()==nombre){
             Nodo* temp = actual->siguiente;
             actual->siguiente = temp->siguiente;
             delete temp;
-            cout << "Cliente eliminado exitosamente." << endl;
+            cout<<"Cliente eliminado exitosamente."<<endl;
             return true;
         }
-        actual = actual->siguiente;
+        actual=actual->siguiente;
     }
 
-    cout << "Cliente no encontrado." << endl;
+    cout<<"Cliente no encontrado."<<endl;
     return false;
 }
